@@ -4,8 +4,8 @@ const bd_usuario = 'us_aula_node';
 const bd_senha = '123456';
 const bd_servidor = '10.67.22.216';
 const bd_porta = '3306';
-const bd_bando = 's223_node';
-let connecton;
+const bd_banco = 's223_node';
+let connection;
 
 const config = {
     host: bd_servidor,
