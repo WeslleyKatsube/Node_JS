@@ -55,22 +55,24 @@ module.exports = {
     },
     async editarUsuarios(request, response) {
         try {
-            //parâmetros recebidos pelo corpo da requisição
-            const [usu_nome, usu_email, usu_dt_nasc, usu_senha, usu_tipo, usu_ativo] = request.body;
-            //parâmetro recebido pela URL via params ex: /usuario/1
+            // parâmetros recebidos pelo corpo da requisição
+            const { usu_nome, usu_email, usu_dt_nasc, usu_senha, usu_tipo, usu_ativo } = request.body;
+            // parâmetro recebido pela URL via params ex: /usuario/1
             const { usu_id } = request.params;
-            //instruções SQl
-            const sql = `UPDATE usuarios SET usu_nome =?, usu_email=?, usu_dt_nasc=?, usu_senha=?, usu_tipo=?, usu_ativo=?;`;
-            //preparo do arry com dados que serão atualizados
+            // instruções SQL
+            const sql = `UPDATE usuarios SET usu_nome = ?, usu_email = ?, 
+                usu_dt_nasc = ?, usu_senha = ?, usu_tipo = ?, 
+                usu_ativo = ? WHERE usu_id = ?;`;
+            // preparo do array com dados que serão atualizados
             const values = [usu_nome, usu_email, usu_dt_nasc, usu_senha, usu_tipo, usu_ativo, usu_id];
-            //execução e obtenção de confirmação da atualização realizada
+            // execução e obtenção de confirmação da atualização realizada
             const atualizaDados = await db.query(sql, values);
 
             return response.status(200).json({
                 sucesso: true,
                 mensagem: `Usuário ${usu_id} atualizado com sucesso!`,
                 dados: atualizaDados[0].affectedRows
-                // mensSql : atualizaDados
+                // mensSql: atualizaDados
             });
         } catch (error) {
             return response.status(500).json({
@@ -85,7 +87,7 @@ module.exports = {
             // parâmetro passado via url na chamada da api pelo front-end
             const { usu_id } = request.params;
             // comando de exclusão
-            const sql = `DELETE FROM usuarios WHERE usu_id?`;
+            const sql = `DELETE FROM usuarios WHERE usu_id = ?`;
             // array com parâmetros da exclusão
             const values = [usu_id];
             //executa instrução no banco de dados
